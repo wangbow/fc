@@ -389,14 +389,14 @@ export default class FcBaseComponent extends BaseComponent {
     } else if (commandName === 'init') {
       this.logger.info('Ensuring nas dir');
       const payload = await GenerateNasProps.toNasAbility(props?.region, vpcConfig, name, role, nasConfig);
-      await this.componentMethodCaller(componentInputs, 'devsapp/nas', 'ensureNasDir', payload.payload);
+      await this.componentMethodCaller(componentInputs, 'devsapp/nas@dev', 'ensureNasDir', payload.payload);
       return;
     }
 
     const payload = await GenerateNasProps.generateNasProps(props, project?.access, inputs.credentials);
 
     this.logger.debug(`transform nas payload: ${JSON.stringify(payload.payload)}, args: ${transformArgs}, command: ${commandName}`);
-    await this.componentMethodCaller(componentInputs, 'devsapp/nas', commandName, payload.payload, transformArgs);
+    await this.componentMethodCaller(componentInputs, 'devsapp/nas@dev', commandName, payload.payload, transformArgs);
 
     tips.showNasNextTips();
   }
