@@ -167,6 +167,7 @@ export default class Instance {
       command: command || [],
     };
     logger.log(`command-exec command:\n${JSON.stringify(options, null, 2)}`);
+    console.log('----------------------------------------');
 
     const hooks = {
       onStdout: (msg) => logger.log(`stdout:\n${msg}`),
@@ -213,6 +214,8 @@ export default class Instance {
           reject(e.message);
         },
       };
+      logger.log(`command-exec command:\n${JSON.stringify(options, null, 2)}`);
+      console.log('----------------------------------------');
 
       const conn = await Client.fcClient.instanceExec(
         serviceName,
