@@ -94,21 +94,21 @@ export default class Instance {
       serviceName,
       functionName,
       qualifier,
-      instanceId,
+      // linkFirst
     } = props;
-    // return (await Client.fcClient.listInstances(serviceName, functionName, {}, qualifier)).data;
-    const res = (await Client.fcClient.listInstances(serviceName, functionName, {}, qualifier)).data;
-    if (!instanceId) {
-      return res;
-    }
-    const insId = res.instances[0]?.instanceId;
-    if (!insId) {
-      console.log('空的 instances:', res);
-      return res;
-    }
-    console.log('instances:: ', JSON.stringify(res.instances, null, 2));
-    props.instanceId = insId;
-    return await this.exec(props);
+    return (await Client.fcClient.listInstances(serviceName, functionName, {}, qualifier)).data;
+    // const res = (await Client.fcClient.listInstances(serviceName, functionName, {}, qualifier)).data;
+    // if (!linkFirst) {
+    //   return res;
+    // }
+    // const insId = res.instances[0]?.instanceId;
+    // if (!insId) {
+    //   console.log('空的 instances:', res);
+    //   return res;
+    // }
+    // console.log('调试阶段，直接 instances:: ', JSON.stringify(res.instances, null, 2));
+    // props.instanceId = insId;
+    // return await this.exec(props);
   }
 
   async exec(props) {
