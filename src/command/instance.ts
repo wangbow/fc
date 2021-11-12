@@ -26,19 +26,19 @@ export interface InstanceListInputsArgs {
   /**
    *  Specify the region of alicloud
    */
-  region: string;
+  region?: string;
   /**
     *  Specify the alicloud fc service name
     */
-  'service-name': string;
+  'service-name'?: string;
   /**
     *  Specify the alicloud fc function name
     */
-  'function-name': string;
+  'function-name'?: string;
   /**
     *  Version or alias, default is LATEST
     */
-  qualifier: string;
+  qualifier?: string;
 }
 
 /**
@@ -56,31 +56,31 @@ export interface InstanceExecInputsArgs {
   /**
    *  Specify the region of alicloud
    */
-  region: string;
+  region?: string;
   /**
     *  Specify the alicloud fc service name
     */
-  'service-name': string;
+  'service-name'?: string;
   /**
     *  Specify the alicloud fc function name
     */
-  'function-name': string;
+  'function-name'?: string;
   /**
     *  Specify the instance parameter
     */
   'instance-id': string;
   /**
-    *  Version or alias, default is LATEST
+    *  version or alias, default is LATEST
     */
-  qualifier: string;
+  qualifier?: string;
   /**
     *  open stdin
     *  @alias i
     */
-  stdin: boolean;
+  stdin?: boolean;
   /**
     *  assign a terminal device
     *  @alias t
     */
-  tty: boolean;
+  tty?: boolean;
 }

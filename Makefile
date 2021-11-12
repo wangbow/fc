@@ -14,11 +14,11 @@ rebase-main: commit
 push:
 	git push --force-with-lease origin $(CURRENT_BRANCH_NAME)
 
-release-dev: push
+release-dev:
 	-gh release delete dev -y
 	-git tag -d dev
 	-git push origin :refs/tags/dev
-	gh release create dev --notes "dev release" --target dev --title "Release dev"
+	gh release create dev --notes "dev release" --target feat/support-instances --title "Release dev"
 
 roll-back-dev:
 	git reset --soft HEAD~1
