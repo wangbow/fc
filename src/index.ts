@@ -15,6 +15,7 @@ import { getFcNames, isAutoConfig, isHttpFunction } from './lib/utils';
 import * as tips from './lib/tips';
 import FcStress from './lib/component/fc-stress';
 import Version from './lib/component/version';
+import Instance from './lib/component/instance';
 import Alias from './lib/component/alias';
 import OnDemand from './lib/component/on-demand';
 import Remove from './lib/component/remove';
@@ -35,6 +36,33 @@ const SUPPORTED_LOCAL_METHOD: string[] = ['invoke', 'start'];
 
 export default class FcBaseComponent extends BaseComponent {
   logger = Logger;
+
+  async instance(inputs) {
+    const {
+      credentials,
+      help,
+      helpKey,
+      subCommand,
+      props,
+      errorMessage,
+    } = await Instance.handlerInputs(inputs);
+
+    await this.report('fc', subCommand ? `version ${subCommand}` : 'version', credentials?.AccountID);
+    if (help) {
+      super.help(helpKey);
+      if (errorMessage) {
+        throw new Error(errorMessage);
+      }
+      return;
+    }
+
+    const instance = new Instance();
+    if (subCommand === 'list') {
+      return await instance.list(props);
+    } else if (subCommand === 'exec') {
+      return await instance.exec(props);
+    }
+  }
 
   async deploy(inputs: IInputs): Promise<any> {
     const { props, args } = this.handlerComponentInputs(inputs);
@@ -390,14 +418,14 @@ export default class FcBaseComponent extends BaseComponent {
     } else if (commandName === 'init') {
       this.logger.info('Ensuring nas dir');
       const payload = await GenerateNasProps.toNasAbility(props?.region, vpcConfig, name, role, nasConfig);
-      await this.componentMethodCaller(componentInputs, 'devsapp/nas', 'ensureNasDir', payload.payload);
+      await this.componentMethodCaller(componentInputs, 'devsapp/nas@dev', 'ensureNasDir', payload.payload);
       return;
     }
 
     const payload = await GenerateNasProps.generateNasProps(props, project?.access, inputs.credentials);
 
     this.logger.debug(`transform nas payload: ${JSON.stringify(payload.payload)}, args: ${transformArgs}, command: ${commandName}`);
-    await this.componentMethodCaller(componentInputs, 'devsapp/nas', commandName, payload.payload, transformArgs);
+    await this.componentMethodCaller(componentInputs, 'devsapp/nas@dev', commandName, payload.payload, transformArgs);
 
     tips.showNasNextTips();
   }

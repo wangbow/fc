@@ -134,7 +134,7 @@ export async function removeNas(access: string, yamlPath: string, region: string
     appName: 'app-nas',
     project: {
       access,
-      component: 'devsapp/nas',
+      component: 'devsapp/nas@dev',
       projectName: 'nas-project',
     },
     command: 'remove',
@@ -148,7 +148,7 @@ export async function removeNas(access: string, yamlPath: string, region: string
       // fileSystemId,
     },
   };
-  const nasComponent = await core.load('devsapp/nas');
+  const nasComponent = await core.load('devsapp/nas@dev');
   await nasComponent.remove(inputs);
 }
 

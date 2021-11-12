@@ -6,7 +6,7 @@ export default class Client {
   static fcClient: any;
 
   static async setFcClient(region: string, credentials, access: string) {
-    const fcCommon = await core.loadComponent('devsapp/fc-common');
+    const fcCommon = await core.loadComponent('devsapp/fc-common@dev');
     const fcClient = await fcCommon.makeFcClient({
       project: { access },
       credentials,
